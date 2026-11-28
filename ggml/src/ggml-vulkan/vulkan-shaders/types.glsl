@@ -236,6 +236,33 @@ struct block_q2_0_packed16
 #define DATA_A_QUANT_LEGACY
 #endif
 
+// Q2_1: min/max (range-scale) variant of Q2_0, KV-only. d + m + qs.
+#define QUANT_K_Q2_1 64
+#define QUANT_R_Q2_1 1
+
+struct block_q2_1
+{
+    float16_t d;
+    float16_t m;
+    uint8_t qs[QUANT_K_Q2_1 / 4];
+};
+
+struct block_q2_1_packed16
+{
+    float16_t d;
+    float16_t m;
+    uint16_t qs[QUANT_K_Q2_1 / 8];
+};
+
+#if defined(DATA_A_Q2_1)
+#define QUANT_K QUANT_K_Q2_1
+#define QUANT_R QUANT_R_Q2_1
+#define QUANT_AUXF 1
+#define A_TYPE block_q2_1
+#define A_TYPE_PACKED16 block_q2_1_packed16
+#define DATA_A_QUANT_LEGACY
+#endif
+
 #define QUANT_K_Q8_1 32
 #define QUANT_R_Q8_1 1
 
